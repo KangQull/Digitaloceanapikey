@@ -62,7 +62,7 @@ show_droplet_list() {
     echo -e "No.  Hostname     IP Address       OS              Size          Create Date"
     echo -e "--------------------------------------------------------------------------------"
 
-    echo "droplet_info" | 
+    echo "droplet_info" |jq .droplet[]| 
     {name: .name, public_ip: (.networks.v4[] | select(.type == "public").ip_address), os: .image.distribution, size_slug: .size.slug, created_at: .created_at} |
     "\(.name) \(.public_ip) \(.os) \(.size_slug) \(.created_at)"' | 
     while read -r droplet_name droplet_ip droplet_os droplet_size_slug droplet_created_at; do
